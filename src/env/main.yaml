@@ -1,0 +1,52 @@
+############################# NAMESPACE ############################# 
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: dev
+spec: {}
+status: {}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: prod
+spec: {}
+status: {}
+---
+############################# SECRET ############################# 
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: dotenv-golang-k8s-api
+  namespace: dev
+spec:
+  refreshInterval: 10s
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: gcp-store 
+  target:
+    name: golang-k8s-api
+  data:
+  - secretKey: dotenv-golang-k8s-api
+    remoteRef:
+      key: k8s_secret_sa
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: dotenv-golang-k8s-api
+  namespace: prod
+spec:
+  refreshInterval: 10s
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: gcp-store 
+  target:
+    name: golang-k8s-api
+  data:
+  - secretKey: dotenv-golang-k8s-api
+    remoteRef:
+      key: k8s_secret_sa
+

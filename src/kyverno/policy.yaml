@@ -1,0 +1,152 @@
+# Validate Replicas
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: deployment-has-multiple-replicas
+  annotations:
+    policies.kyverno.io/title: Require Multiple Replicas
+    policies.kyverno.io/category: Sample
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/subject: Deployment
+    policies.kyverno.io/minversion: 1.6.0
+    policies.kyverno.io/description: >-
+      Deployments with a single replica cannot be highly available and thus the application
+      may suffer downtime if that one replica goes down. This policy validates that Deployments
+      have more than one replica.      
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+    - name: deployment-has-multiple-replicas
+      match:
+        any:
+        - resources:
+            kinds:
+            - Deployment
+      validate:
+        message: "Deployments should have more than one replica to ensure availability."
+        pattern:
+          spec:
+            replicas: ">1"
+---
+# Validate Network Policy
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-network-policy
+  annotations:
+    policies.kyverno.io/title: Require NetworkPolicy
+    policies.kyverno.io/category: Sample
+    policies.kyverno.io/minversion: 1.6.0
+    kyverno.io/kyverno-version: 1.6.2
+    kyverno.io/kubernetes-version: "1.23"
+    policies.kyverno.io/subject: Deployment, NetworkPolicy
+    policies.kyverno.io/description: >-
+      NetworkPolicy is used to control Pod-to-Pod communication
+      and is a good practice to ensure only authorized Pods can send/receive
+      traffic. This policy checks incoming Deployments to ensure
+      they have a matching, preexisting NetworkPolicy.      
+spec:
+  validationFailureAction: Enforce
+  background: false
+  rules:
+  - name: require-network-policy
+    match:
+      any:
+      - resources:
+          kinds:
+          - Deployment
+          namespaces:
+          - dev
+          - prod
+    preconditions:
+      any:
+      - key: "{{request.operation || 'BACKGROUND'}}"
+        operator: Equals
+        value: CREATE
+    context:
+    - name: policies_count
+      apiCall:
+        urlPath: "/apis/networking.k8s.io/v1/namespaces/{{request.namespace}}/networkpolicies"
+        jmesPath: "items[?label_match(spec.podSelector.matchLabels, `{{request.object.spec.template.metadata.labels}}`)] | length(@)"
+    validate:
+      message: "Every Deployment requires a matching NetworkPolicy."
+      deny:
+        conditions:
+          any:
+          - key: "{{policies_count}}"
+            operator: LessThan
+            value: 1
+---
+# Validae Probs
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: validate-probes
+  annotations:
+    pod-policies.kyverno.io/autogen-controllers: none
+    policies.kyverno.io/title: Validate Probes
+    policies.kyverno.io/category: Sample
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/minversion: 1.6.0
+    policies.kyverno.io/subject: Pod
+    policies.kyverno.io/description: >-
+      Liveness and readiness probes accomplish different goals, and setting both to the same
+      is an anti-pattern and often results in app problems in the future. This policy
+      checks that liveness and readiness probes are not equal. Keep in mind that if both the 
+      probes are not set, they are considered to be equal and hence fails the check.      
+spec:
+  validationFailureAction: Audit
+  background: false
+  rules:
+    - name: validate-probes
+      match:
+        any:
+        - resources:
+            kinds:
+            - Deployment
+            - DaemonSet
+            - StatefulSet
+            namespaces:
+            - dev
+            - prod
+      validate:
+        message: "Liveness and readiness probes cannot be the same."
+        deny:
+          conditions:
+            any:
+            - key: "{{ request.object.spec.template.spec.containers[?readinessProbe==livenessProbe] | length(@) }}"
+              operator: GreaterThan
+              value: 0
+---
+# Validate resource
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: validate-resource-requests-limits
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+  - name: validate-cpu-and-memory-limits
+    match:
+      resources:
+        kinds:
+        - Deployment
+        namespaces:
+        - dev
+        - prod        
+    validate:
+      message: "CPU and memory requests and limits are required for all containers"
+      pattern:
+        spec:
+          template:
+            spec:
+              containers:
+              - resources:
+                  requests:
+                    cpu: "?*"
+                    memory: "?*"
+                  limits:
+                    cpu: "?*"
+                    memory: "?*"
