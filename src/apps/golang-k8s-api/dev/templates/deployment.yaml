@@ -43,7 +43,7 @@ spec:
             port: {{ .Values.app.containerPort }}
         readinessProbe:
           httpGet:
-            path: /clusterinfo
+            path: /pods/
             port: {{ .Values.app.containerPort }}
       volumes:
       - name: {{ .Release.Name }}
