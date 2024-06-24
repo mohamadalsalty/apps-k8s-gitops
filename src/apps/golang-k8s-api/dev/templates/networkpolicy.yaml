@@ -11,8 +11,6 @@ spec:
   - Ingress
   - Egress
   ingress:
-    - namespaceSelector:
-        matchLabels:
-          name: {{ .Values.app.namespace }}
+  -  {}
   egress:
   - {}
