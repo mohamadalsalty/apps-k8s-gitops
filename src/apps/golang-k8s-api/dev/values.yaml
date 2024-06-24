@@ -6,4 +6,4 @@ app:
   hostname: example.localhost
   image:
     repository: "mohamadalsalty/k8s-dash"
-    tag: "fa1b411799e14a928dafb21d62e1e53b1f97f53b"
+    tag: "e0a62d0bbcda518c93c159ce6027413c7f23b934"
