@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: golang-k8s-frontend-dev
+spec:
+  destination:
+    name: ''
+    namespace: dev
+    server: https://kubernetes.default.svc
+  source:
+    path: src/apps/golang-k8s-frontend/dev
+    repoURL: git@github.com:mohamadalsalty/apps-k8s-gitops.git
+    targetRevision: HEAD
+  sources: []
+  project: default
+

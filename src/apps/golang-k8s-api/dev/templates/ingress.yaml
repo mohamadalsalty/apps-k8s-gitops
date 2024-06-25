@@ -18,3 +18,10 @@ spec:
             name: {{ .Release.Name }}
             port:
               number: {{ .Values.app.containerPort }}
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: golang-k8s-frontend-dev
+            port:
+              number: 80
