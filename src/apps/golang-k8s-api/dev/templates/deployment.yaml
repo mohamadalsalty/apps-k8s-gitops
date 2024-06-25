@@ -32,11 +32,11 @@ spec:
           readOnly: true
         resources:
           requests:
-            cpu: "250m"
-            memory: "150Mi"
+            cpu: "30m"
+            memory: "16Mi"
           limits:
-            cpu: "500m"
-            memory: "300Mi"
+            cpu: "60m"
+            memory: "100Mi"
         livenessProbe:
           httpGet:
             path: /clusterinfo
