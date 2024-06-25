@@ -11,14 +11,14 @@ spec:
   - host: {{ .Values.app.hostname }}
     http:
       paths:
-      - path: /
+      - path: /api
         pathType: Prefix
         backend:
           service:
             name: {{ .Release.Name }}
             port:
               number: {{ .Values.app.containerPort }}
-      - path: /api
+      - path: /
         pathType: Prefix
         backend:
           service:
