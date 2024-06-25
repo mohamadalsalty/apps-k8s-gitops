@@ -19,7 +19,7 @@ status: {}
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
-  name: dotenv-golang-k8s-api
+  name: dotenv-golang-k8s-api-dev
   namespace: dev
 spec:
   refreshInterval: 10s
@@ -27,9 +27,9 @@ spec:
     kind: ClusterSecretStore
     name: gcp-store 
   target:
-    name: golang-k8s-api
+    name: golang-k8s-api-dev
   data:
-  - secretKey: dotenv-golang-k8s-api
+  - secretKey: dotenv-golang-k8s-api-dev
     remoteRef:
       key: k8s_secret_sa
 ---

@@ -1,0 +1,108 @@
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "32"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"creationTimestamp":null,"labels":{"app":"golang-k8s-api-dev","app.kubernetes.io/instance":"golang-k8s-api-dev"},"name":"golang-k8s-api-dev","namespace":"dev"},"spec":{"replicas":2,"selector":{"matchLabels":{"app":"golang-k8s-api-dev"}},"strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":1}},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"golang-k8s-api-dev"}},"spec":{"containers":[{"image":"mohamadalsalty/k8s-dash:d1af688f68f6da8d6d4a2db430e9dee901b23fba","livenessProbe":{"httpGet":{"path":"/clusterinfo","port":8080}},"name":"golang-k8s-api-dev","ports":[{"containerPort":8080}],"readinessProbe":{"httpGet":{"path":"/pods/","port":8080}},"resources":{"limits":{"cpu":"120m","memory":"200Mi"},"requests":{"cpu":"50m","memory":"120Mi"}},"volumeMounts":[{"mountPath":"config","name":"golang-k8s-api-dev","readOnly":true}]}],"volumes":[{"name":"golang-k8s-api-dev","secret":{"items":[{"key":"dotenv-golang-k8s-api-dev","path":".env"}],"secretName":"golang-k8s-api-dev"}}]}}},"status":{}}
+  creationTimestamp: "2024-06-24T18:52:46Z"
+  generation: 167
+  labels:
+    app: golang-k8s-api-dev
+    app.kubernetes.io/instance: golang-k8s-api-dev
+  name: golang-k8s-api-dev
+  namespace: dev
+  resourceVersion: "3475664"
+  uid: f32b0665-46de-4276-87a6-24c5634c2799
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 50
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: golang-k8s-api-dev
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: golang-k8s-api-dev
+    spec:
+      containers:
+      - image: mohamadalsalty/k8s-dash:d1af688f68f6da8d6d4a2db430e9dee901b23fba
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /clusterinfo
+            port: 8080
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: golang-k8s-api-dev
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /pods/
+            port: 8080
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          requests:
+            cpu: 250m
+            memory: 65Mi
+	  limits:
+	    memory: "128Mi"
+	    cpu: "500m"
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: config
+          name: golang-k8s-api-dev
+          readOnly: true
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: golang-k8s-api-dev
+        secret:
+          defaultMode: 420
+          items:
+          - key: dotenv-golang-k8s-api-dev
+            path: .env
+          secretName: golang-k8s-api-dev
+status:
+  availableReplicas: 50
+  conditions:
+  - lastTransitionTime: "2024-06-25T07:20:14Z"
+    lastUpdateTime: "2024-06-25T07:20:14Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2024-06-24T19:51:53Z"
+    lastUpdateTime: "2024-06-25T07:56:58Z"
+    message: ReplicaSet "golang-k8s-api-dev-6db779b989" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 167
+  readyReplicas: 50
+  replicas: 50
+  updatedReplicas: 50
