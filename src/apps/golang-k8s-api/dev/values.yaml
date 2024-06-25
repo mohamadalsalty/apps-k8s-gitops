@@ -2,7 +2,7 @@ app:
   replicas: 2
   containerPort: 8080
   namespace: dev
-  replicasMax: 5
+  replicasMax: 3
   hostname: example.localhost.com
   image:
     repository: "mohamadalsalty/k8s-dash"
