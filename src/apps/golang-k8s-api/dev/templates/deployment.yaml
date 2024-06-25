@@ -33,10 +33,10 @@ spec:
         resources:
           requests:
             memory: "141Mi"
-            cpu: "10m"
+            cpu: "30m"
           limits:
             memory: "300Mi"
-            cpu: "20m"
+            cpu: "50m"
         livenessProbe:
           httpGet:
             path: /clusterinfo
