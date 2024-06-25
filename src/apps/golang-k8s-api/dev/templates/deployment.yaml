@@ -32,7 +32,7 @@ spec:
           readOnly: true
         resources:
           requests:
-            cpu: "10m"
+            cpu: "30m"
             memory: "16Mi"
           limits:
             cpu: "500m"
