@@ -1,5 +1,5 @@
 app:
-  replicas: 80
+  replicas: 100
   containerPort: 8080
   namespace: dev
   replicasMax: 300
