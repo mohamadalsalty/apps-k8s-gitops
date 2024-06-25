@@ -32,10 +32,10 @@ spec:
           readOnly: true
         resources:
           requests:
-            cpu: "30m"
+            cpu: "50m"
             memory: "150Mi"
           limits:
-            cpu: "60m"
+            cpu: "100m"
             memory: "300Mi"
         livenessProbe:
           httpGet:
