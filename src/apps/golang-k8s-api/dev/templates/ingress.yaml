@@ -11,14 +11,14 @@ spec:
   - host: {{ .Values.app.hostname }}
     http:
       paths:
-      - path: /index.html
+      - path: /
         pathType: Prefix
         backend:
           service:
             name: golang-k8s-frontend-dev
             port:
               number: 80
-      - path: /api
+      - path: /*
         pathType: Prefix
         backend:
           service:
