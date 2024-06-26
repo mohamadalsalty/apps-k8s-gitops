@@ -18,7 +18,7 @@ spec:
             name: {{ .Release.Name }}
             port:
               number: {{ .Values.app.containerPort }}      
-      - path: /
+      - path: /index.html
         pathType: Prefix
         backend:
           service:
