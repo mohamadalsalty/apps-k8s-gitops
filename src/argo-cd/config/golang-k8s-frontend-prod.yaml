@@ -8,7 +8,7 @@ spec:
     namespace: prod
     server: https://kubernetes.default.svc
   source:
-    path: src/apps/golang-k8s-frontend
+    path: src/apps/golang-k8s-frontend/prod
     repoURL: git@github.com:mohamadalsalty/apps-k8s-gitops.git
     targetRevision: HEAD
   sources: []
