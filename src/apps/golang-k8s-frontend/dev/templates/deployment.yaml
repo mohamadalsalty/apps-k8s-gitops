@@ -22,6 +22,10 @@ spec:
       containers:
       - name: {{ .Release.Name }}
         image: {{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}
+        volumeMounts:
+        - name: dotenv-secret
+          mountPath: /home/node/app/.env
+          subPath: dotenv-golang-k8s-api-dev
         ports:
         - containerPort: {{ .Values.app.containerPort }}
         resources:
@@ -39,4 +43,8 @@ spec:
           httpGet:
             path: /
             port: {{ .Values.app.containerPort }}           
+      volumes:
+      - name: dotenv-secret
+        secret:
+          secretName: golang-k8s-api-dev
 status: {}
