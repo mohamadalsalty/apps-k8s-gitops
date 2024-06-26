@@ -32,13 +32,5 @@ spec:
             memory: "50Mi"
           limits:
             cpu: "100m"
-            memory: "100Mi"
-        livenessProbe:
-          httpGet:
-            path: /
-            port: {{ .Values.app.containerPort }}
-        readinessProbe:
-          httpGet:
-            path: /
-            port: {{ .Values.app.containerPort }}           
+            memory: "100Mi"  
 status: {}
