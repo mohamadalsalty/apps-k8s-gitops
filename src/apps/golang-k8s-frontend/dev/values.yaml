@@ -3,7 +3,7 @@ app:
   containerPort: 80
   namespace: dev
   replicasMax: 10
-  hostname: example.localhost.com
+  hostname: example-dev.localhost.com
   image:
     repository: "mohamadalsalty/k8s-dash-frontend"
     tag: "612458d6ee86e4df2cb0e8542c8c78dc576fcfa0"

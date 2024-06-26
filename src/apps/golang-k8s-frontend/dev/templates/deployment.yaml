@@ -25,7 +25,7 @@ spec:
         volumeMounts:
         - name: dotenv-secret
           mountPath: /home/node/app/.env
-          subPath: dotenv-golang-k8s-api-dev
+          subPath: dotenv-frontend
         ports:
         - containerPort: {{ .Values.app.containerPort }}
         resources:
@@ -38,5 +38,5 @@ spec:
       volumes:
       - name: dotenv-secret
         secret:
-          secretName: golang-k8s-api-dev
+          secretName: frontend
 status: {}
