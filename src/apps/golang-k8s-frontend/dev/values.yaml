@@ -3,7 +3,7 @@ app:
   containerPort: 3000
   namespace: dev
   replicasMax: 10
-  hostname: example-dev.localhost.com
+  hostname: golang-k8s-frontend.vr.lt
   image:
     repository: "mohamadalsalty/k8s-dash-frontend"
     tag: "612458d6ee86e4df2cb0e8542c8c78dc576fcfa0"
