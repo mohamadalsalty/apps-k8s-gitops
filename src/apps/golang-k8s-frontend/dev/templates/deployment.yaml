@@ -12,9 +12,7 @@ spec:
     matchLabels:
       app: {{ .Release.Name }}
   strategy:
-    rollingUpdate:
-      maxUnavailable: 1
-      maxSurge: 1
+    type: Recreate
   template:
     metadata:
       creationTimestamp: null
