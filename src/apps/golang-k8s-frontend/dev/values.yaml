@@ -1,6 +1,6 @@
 app:
   replicas: 2
-  containerPort: 80
+  containerPort: 3000
   namespace: dev
   replicasMax: 10
   hostname: example-dev.localhost.com
