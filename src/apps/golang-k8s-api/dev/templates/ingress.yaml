@@ -17,7 +17,7 @@ spec:
           service:
             name: golang-k8s-frontend-dev
             port:
-              number: 80      
+              number: 3000      
       - path: /
         pathType: Prefix
         backend:
