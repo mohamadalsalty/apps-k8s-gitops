@@ -39,3 +39,21 @@ spec:
     remoteRef:
       key: k8s_secret_sa            # name of the GCPSM secret key
 
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: dotenv-frontend
+  namespace: dev
+spec:
+  refreshInterval: 10s            # rate SecretManager pulls GCPSM, Low refereshInternval for demo purpose,Set this value based based on apps
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: gcp-store               # name of the ClusterSecretStore or you can also reference SecretStore
+  target:
+    name: frontend                # name of the k8s Secret to be created
+  data:
+  - secretKey: dotenv-frontend            # name of secretkey it can be any name            
+    remoteRef:
+      key: env-frontend-dev            # name of the GCPSM secret key
+
