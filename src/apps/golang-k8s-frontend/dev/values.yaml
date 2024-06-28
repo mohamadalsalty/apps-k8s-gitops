@@ -6,4 +6,4 @@ app:
   hostname: golang-k8s-frontend.mooo.com
   image:
     repository: "mohamadalsalty/k8s-dash-frontend"
-    tag: "b993e45988a551a8aea14eab93be5a1058b8db2a"
+    tag: "ffa54ea11e28c75c1f43df3fe92e7ff173b2c8c1"
