@@ -6,4 +6,4 @@ app:
   hostname: golang-k8s-api.mooo.com
   image:
     repository: "mohamadalsalty/k8s-dash"
-    tag: "34051035ba7bad7d24c01f5ba8c5948b8e3e5f76"
+    tag: "b3a580879e83507d696f39e0cc7320408cc87062"
