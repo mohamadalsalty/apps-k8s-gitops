@@ -22,21 +22,13 @@ spec:
       containers:
       - name: {{ .Release.Name }}
         image: {{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}
-        volumeMounts:
-        - name: dotenv-secret
-          mountPath: /home/node/app/.env
-          subPath: dotenv-frontend
         ports:
         - containerPort: {{ .Values.app.containerPort }}
         resources:
           requests:
             cpu: "50m"
-            memory: "50Mi"
+            memory: "150Mi"
           limits:
             cpu: "100m"
-            memory: "100Mi"      
-      volumes:
-      - name: dotenv-secret
-        secret:
-          secretName: frontend
+            memory: "300Mi"  
 status: {}
